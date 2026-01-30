@@ -6,10 +6,11 @@ public class QuantityMeasurementApp {
 
     public static class Feet {
 
-        private final double feet;
+        private final double value;
 
-        public Feet(double feet) {
-            this.feet = feet;
+        @Override
+        public String toString() {
+            return "Feet{" + "value=" + value + '}';
         }
 
         @Override
@@ -17,19 +18,19 @@ public class QuantityMeasurementApp {
             if (this == o)
                 return true;
             if (o == null || getClass() != o.getClass()) return false;
-            Feet feet1 = (Feet) o;
-            return Double.compare(feet, feet1.feet) == 0;
+            Feet feet = (Feet) o;
+            return Double.compare(value, feet.value) == 0;
         }
 
         @Override
         public int hashCode() {
-            return Objects.hashCode(feet);
+            return Objects.hashCode(value);
         }
 
-        @Override
-        public String toString() {
-            return "Feet{" + "feet=" + feet + '}';
+        public Feet( double value) {
+            this.value = value;
         }
+
     }
 
     public static void main(String[] args) {
