@@ -47,7 +47,7 @@ public class Length {
 
 
     public static double convert(double value, LengthUnit unit1, LengthUnit unit2) {
-        if (unit1 == null && unit2 == null) {
+        if (unit1 == null || unit2 == null) {
             throw new IllegalArgumentException("Value cannot be null");
         }
         if (!Double.isFinite(value)) {
