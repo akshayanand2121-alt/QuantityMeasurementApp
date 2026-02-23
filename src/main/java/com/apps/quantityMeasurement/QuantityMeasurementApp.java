@@ -6,18 +6,24 @@ public class QuantityMeasurementApp {
 
     public static void main(String[] args) {
 
-        demonstrateComparison(12, Length.LengthUnit.INCHES, Length.LengthUnit.FEET);
-        demonstrateComparison(03, Length.LengthUnit.YARDS, Length.LengthUnit.FEET);
-        demonstrateComparison(26, Length.LengthUnit.INCHES, Length.LengthUnit.YARDS);
-        demonstrateComparison(1, Length.LengthUnit.CENTIMETERS, Length.LengthUnit.INCHES);
-        demonstrateComparison(0.0, Length.LengthUnit.FEET, Length.LengthUnit.INCHES);
+        additionDemonstration(new Length(1, LengthUnit.FEET),new Length(12, Length.LengthUnit.INCHES));
+        additionDemonstration(new Length(1, LengthUnit.FEET),new Length(2, Length.LengthUnit.INCHES));
+        additionDemonstration(new Length(1, LengthUnit.FEET),new Length(12, Length.LengthUnit.INCHES));
+        additionDemonstration(new Length(12, LengthUnit.FEET),new Length(1, Length.LengthUnit.INCHES));
+        additionDemonstration(new Length(1, LengthUnit.FEET),new Length(3, Length.LengthUnit.INCHES));
+        additionDemonstration(new Length(36, LengthUnit.FEET),new Length(1, Length.LengthUnit.INCHES));
+        additionDemonstration(new Length(2.54, LengthUnit.FEET),new Length(1, Length.LengthUnit.INCHES));
+        additionDemonstration(new Length(5, LengthUnit.FEET),new Length(0, Length.LengthUnit.INCHES));
+        additionDemonstration(new Length(5, LengthUnit.FEET),new Length(-2.0, Length.LengthUnit.INCHES));
+
+
 
     }
 
-    private static void demonstrateComparison(double v, LengthUnit unit1, LengthUnit unit2) {
-        if (unit1 != null && unit2 != null) {
-            double result = Length.convert(v, unit1, unit2);
-            System.out.println("Converted Value of "+v+" from " + unit1 + " to "+ unit2 +" is: "+result );
-        }
+    public static Length additionDemonstration(Length lengthOne, Length lengthTwo ) {
+        Length result = Length.add(lengthOne,lengthTwo,lengthOne.getUnit());
+        System.out.println("Addition of " + lengthOne.getValue() + " "+ lengthOne.getUnit() + " and " + lengthTwo.getValue() +" "+ lengthTwo.getUnit()+ " is " + result.getValue() + " "+result.getUnit());
+        //  Length lengthResult = new Length(result,lengthOne.getUnit());
+        return result;
     }
 }

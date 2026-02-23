@@ -8,6 +8,7 @@ public class Length {
     private LengthUnit unit;
 
     public enum LengthUnit {
+
         FEET(12),
         INCHES(1),
         YARDS(36),
@@ -22,15 +23,14 @@ public class Length {
         public double getConversionFactor() {
             return conversionFactor;
         }
+
     }
 
-    // Constructor to initialize length value and unit
-    public Length(Double value, LengthUnit unit) {
-        if (unit == null) {
-            throw new IllegalArgumentException("Value cannot be null");
-        }
+    public Length(double value, LengthUnit unit) {
+        if (unit == null) throw new IllegalArgumentException("Unit cannot be null");
+
         if (!Double.isFinite(value)) {
-            throw new IllegalArgumentException("Value must be finite");
+            throw new IllegalArgumentException("Value must be a finite number");
         }
         this.value = value;
         this.unit = unit;
@@ -44,33 +44,41 @@ public class Length {
         return unit;
     }
 
+    public static double convert(double value, LengthUnit unitOne, LengthUnit unitTwo) {
 
-    public static double convert(double value, LengthUnit unit1, LengthUnit unit2) {
-        if (unit1 == null || unit2 == null) {
-            throw new IllegalArgumentException("Value cannot be null");
+        if (unitOne == null || unitTwo == null) {
+            throw new IllegalArgumentException("Units cannot be null");
         }
+
         if (!Double.isFinite(value)) {
-            throw new IllegalArgumentException("Value must be finite");
+            throw new IllegalArgumentException("Value must be a finite number");
         }
-        double inchesvalue = value * unit1.conversionFactor;
-        double targetvalue = inchesvalue / unit2.conversionFactor;
-        return targetvalue;
+
+        double valueInInches = value * unitOne.getConversionFactor();
+        // System.out.println("value" + value + "  unitOne  "+unitOne.conversionFactor);
+        double convertedValue = valueInInches / unitTwo.getConversionFactor();
+        return convertedValue;
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
-        Length other = (Length) obj;
-        double thisFeet = this.value * this.unit.getConversionFactor();
-        double otherFeet = other.value * other.unit.getConversionFactor();
-        return Double.compare(thisFeet, otherFeet) == 0;
 
+        Length other = (Length) obj;
+
+        double thisInFeet = this.value * this.unit.getConversionFactor();
+        double otherInFeet = other.value * other.unit.getConversionFactor();
+
+        return Double.compare(thisInFeet, otherInFeet) == 0;
     }
 
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(value, unit);
+    public static Length add(Length length, Length length2, LengthUnit targetUnit) {
+        if (length2 ==null) throw new IllegalArgumentException();
+        double firstConvertedValue = convert(length.value, length.unit, targetUnit);
+        double secondConvertedValue = convert(length2.value, length2.unit, targetUnit);
+        return new Length((firstConvertedValue + secondConvertedValue),targetUnit);
+        //  return (firstConvertedValue + secondConvertedValue);
     }
 }
